@@ -1,0 +1,5 @@
+services:
+  - type: cron
+    name: zero-day-alert-bot
+    schedule: "0 */4 * * *"
+    command: "python3 main.py"
