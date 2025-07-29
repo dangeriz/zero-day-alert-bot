@@ -44,6 +44,6 @@ def fetch_articles():
                         "source": source,
                         "title": entry.title,
                         "link": entry.link,
-                        "published": entry.get("published", datetime.utcnow().isoformat())
+                        "published": entry.get("published", datetime.now(timezone.utc).isoformat())
                     })
     return new_articles
