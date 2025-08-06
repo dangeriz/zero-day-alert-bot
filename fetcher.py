@@ -1,6 +1,6 @@
 import feedparser
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timezone 
 
 RSS_FEEDS = {
     "Bleeping Computer": "https://www.bleepingcomputer.com/feed/",
