@@ -15,3 +15,11 @@ services:
     plan: free
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: python failure_log_test.py
+
+      - type: manual
+    name: smoke-test
+    env: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: python smoke_test.py
+
