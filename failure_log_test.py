@@ -13,7 +13,7 @@ def append_test_entry():
     print(f"Appended test entry to {LOG_PATH}")
 
 def trigger_github_push():
-    """Optionally trigger GitHub Action push-failure-log.yml."""
+    """Trigger a GitHub commit & push for the updated log."""
     github_repo = os.getenv("GITHUB_REPO")
     github_token = os.getenv("GITHUB_TOKEN")
 
@@ -21,21 +21,18 @@ def trigger_github_push():
         print("Skipping GitHub push trigger — GITHUB_REPO or GITHUB_TOKEN not set.")
         return
 
-# Configure git identity from environment variables (with fallbacks)
-git_name = os.getenv("GIT_COMMIT_NAME", "Render Bot")
-git_email = os.getenv("GIT_COMMIT_EMAIL", "render@users.noreply.github.com")
+    # Git identity from env vars (with defaults)
+    git_name = os.getenv("GIT_COMMIT_NAME", "Render Bot")
+    git_email = os.getenv("GIT_COMMIT_EMAIL", "render@users.noreply.github.com")
 
-os.system(f'git config user.name "{git_name}"')
-os.system(f'git config user.email "{git_email}"')
+    os.system(f'git config user.name "{git_name}"')
+    os.system(f'git config user.email "{git_email}"')
 
-# Stage and commit the updated log
-os.system("git add notifications.log")
-os.system(
-    f"git commit -m 'chore: append test entry from Render at {datetime.utcnow().isoformat()}' || echo 'No changes to commit'"
-)
-
-# Push to GitHub
-os.system(f"git push https://{github_token}@github.com/{github_repo}.git HEAD:main")
+    os.system("git add notifications.log")
+    os.system(
+        f"git commit -m 'chore: append test entry from Render at {datetime.utcnow().isoformat()}' || echo 'No changes to commit'"
+    )
+    os.system(f"git push https://{github_token}@github.com/{github_repo}.git HEAD:main")
 
 if __name__ == "__main__":
     append_test_entry()
