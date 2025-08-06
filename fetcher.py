@@ -38,7 +38,7 @@ def fetch_articles():
     for source, url in RSS_FEEDS.items():
         feed = feedparser.parse(url)
         for entry in feed.entries:
-            if "zero-day" in entry.title.lower() or "zero day" in entry.summary.lower():
+           if "zero-day" in entry.title.lower() or "zero day" in entry.get("summary", "").lower():
                 if is_new_article(entry.link):
                     new_articles.append({
                         "source": source,
