@@ -1,5 +1,16 @@
 services:
   - type: cron
-    name: zero-day-alert-bot
-    schedule: "0 */4 * * *"
-    command: "python3 main.py"
+    name: zero-day-alert
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    schedule: "0 */4 * * *"  # every 4 hours
+
+  - type: manual
+    name: failure-log-test
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python failure_log_test.py
+
