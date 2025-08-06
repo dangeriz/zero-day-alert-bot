@@ -1,16 +1,17 @@
 services:
+  # Scheduled job - runs every 4 hours
   - type: cron
     name: zero-day-alert
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: python main.py
     schedule: "0 */4 * * *"  # every 4 hours
 
+  # Manual job - appends test failure entry
   - type: manual
     name: failure-log-test
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: python failure_log_test.py
-
